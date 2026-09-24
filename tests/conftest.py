@@ -34,8 +34,8 @@ def fast_reconnect(monkeypatch: pytest.MonkeyPatch) -> None:
 
 
 @pytest.fixture
-async def fake_server() -> AsyncIterator[FakeLocoGPS]:
-    """Run a fake LocoGPS server."""
+async def fake_server(socket_enabled: None) -> AsyncIterator[FakeLocoGPS]:
+    """Run a fake LocoGPS server on 127.0.0.1, the only host tests may reach."""
     server = FakeLocoGPS()
     await server.start()
     yield server
