@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Fragen zu Tracker, Abo oder App
+    url: https://locogps.de/kontakt
+    about: Alles, was nicht die Home-Assistant-Integration betrifft, beantwortet dir der LocoGPS-Support.

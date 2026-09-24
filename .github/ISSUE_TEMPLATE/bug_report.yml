@@ -1,0 +1,46 @@
+name: Fehler melden
+description: Etwas in der LocoGPS-Integration funktioniert nicht wie erwartet.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Danke für deine Meldung. Bitte entferne vorher persönliche Daten wie E-Mail-Adressen, Standorte oder Gerätenummern aus Texten und Logs.
+  - type: input
+    id: ha_version
+    attributes:
+      label: Home-Assistant-Version
+      description: Zu finden unter Einstellungen > Info.
+      placeholder: "2026.9.3"
+    validations:
+      required: true
+  - type: input
+    id: integration_version
+    attributes:
+      label: Version der LocoGPS-Integration
+      description: Zu finden in HACS bei LocoGPS.
+      placeholder: "0.1.0"
+    validations:
+      required: true
+  - type: dropdown
+    id: tracker
+    attributes:
+      label: Tracker
+      options:
+        - LocoGPS LV2
+        - anderes Modell
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Was ist passiert?
+      description: Was hast du erwartet, und was ist stattdessen passiert? Nenn bitte auch die betroffene Entität, zum Beispiel binary_sensor.edda_geozaun_zuhause.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log-Auszug
+      description: Aus Einstellungen > System > Protokolle, nach locogps gefiltert.
+      render: text
