@@ -1,7 +1,7 @@
 {
   "domain": "locogps",
   "name": "LocoGPS",
-  "codeowners": ["@ChrissixP"],
+  "codeowners": ["@LocoGPS"],
   "config_flow": true,
   "documentation": "https://github.com/LocoGPS/home-assistant",
   "integration_type": "hub",
