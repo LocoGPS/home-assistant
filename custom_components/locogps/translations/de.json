@@ -1,0 +1,84 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Bei LocoGPS anmelden",
+        "description": "Melde dich mit deinem LocoGPS-Konto an. Dein Passwort wird nicht gespeichert, Home Assistant bekommt stattdessen einen eigenen Zugangsschlüssel.",
+        "data": {
+          "email": "E-Mail",
+          "password": "Passwort"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Erneut anmelden",
+        "description": "Der Zugang für {email} ist abgelaufen oder wurde widerrufen. Melde dich einmal neu an, danach läuft alles weiter.",
+        "data": {
+          "email": "E-Mail",
+          "password": "Passwort"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "E-Mail oder Passwort stimmen nicht.",
+      "two_factor": "Konten mit Zwei-Faktor-Anmeldung werden noch nicht unterstützt.",
+      "rate_limited": "Zu viele Anmeldeversuche. Bitte warte eine Minute und versuche es dann erneut.",
+      "cannot_connect": "Der LocoGPS-Server ist gerade nicht erreichbar.",
+      "unknown": "Unerwarteter Fehler."
+    },
+    "abort": {
+      "already_configured": "Dieses LocoGPS-Konto ist schon eingerichtet.",
+      "reauth_successful": "Die Anmeldung hat geklappt.",
+      "wrong_account": "Bitte melde dich mit dem Konto an, das schon eingerichtet ist."
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "online": {
+        "name": "Online"
+      },
+      "charging": {
+        "name": "Laden"
+      },
+      "wifi_energy_saving": {
+        "name": "WLAN-Energiesparmodus",
+        "state_attributes": {
+          "wifi_zone": {
+            "name": "WLAN-Zone"
+          }
+        }
+      },
+      "geofence": {
+        "name": "Geozaun {name}",
+        "state": {
+          "on": "Drinnen",
+          "off": "Draußen"
+        }
+      }
+    },
+    "device_tracker": {
+      "tracker": {
+        "state_attributes": {
+          "fix_time": {
+            "name": "Positionszeit"
+          }
+        }
+      }
+    },
+    "sensor": {
+      "battery": {
+        "name": "Akku"
+      },
+      "last_update": {
+        "name": "Letzte Aktualisierung"
+      }
+    }
+  },
+  "exceptions": {
+    "auth_failed": {
+      "message": "Die Anmeldung bei LocoGPS ist abgelaufen."
+    },
+    "update_failed": {
+      "message": "LocoGPS ist gerade nicht erreichbar ({error})."
+    }
+  }
+}

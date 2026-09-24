@@ -1,0 +1,84 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Log in to LocoGPS",
+        "description": "Log in with your LocoGPS account. Your password is not stored, Home Assistant gets its own access key instead.",
+        "data": {
+          "email": "Email",
+          "password": "Password"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Log in again",
+        "description": "The access for {email} has expired or was revoked. Log in once more and everything continues to work.",
+        "data": {
+          "email": "Email",
+          "password": "Password"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Email or password is not correct.",
+      "two_factor": "Accounts with two-factor login are not supported yet.",
+      "rate_limited": "Too many login attempts. Please wait a minute and try again.",
+      "cannot_connect": "The LocoGPS server cannot be reached right now.",
+      "unknown": "Unexpected error."
+    },
+    "abort": {
+      "already_configured": "This LocoGPS account is already set up.",
+      "reauth_successful": "Login successful.",
+      "wrong_account": "Please log in with the account that is already set up."
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "online": {
+        "name": "Online"
+      },
+      "charging": {
+        "name": "Charging"
+      },
+      "wifi_energy_saving": {
+        "name": "WLAN power saving",
+        "state_attributes": {
+          "wifi_zone": {
+            "name": "WLAN zone"
+          }
+        }
+      },
+      "geofence": {
+        "name": "Geofence {name}",
+        "state": {
+          "on": "Inside",
+          "off": "Outside"
+        }
+      }
+    },
+    "device_tracker": {
+      "tracker": {
+        "state_attributes": {
+          "fix_time": {
+            "name": "Position time"
+          }
+        }
+      }
+    },
+    "sensor": {
+      "battery": {
+        "name": "Battery"
+      },
+      "last_update": {
+        "name": "Last update"
+      }
+    }
+  },
+  "exceptions": {
+    "auth_failed": {
+      "message": "The LocoGPS login has expired."
+    },
+    "update_failed": {
+      "message": "LocoGPS cannot be reached right now ({error})."
+    }
+  }
+}

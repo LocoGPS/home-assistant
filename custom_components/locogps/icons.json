@@ -1,0 +1,28 @@
+{
+  "entity": {
+    "binary_sensor": {
+      "geofence": {
+        "default": "mdi:map-marker-radius-outline",
+        "state": {
+          "on": "mdi:map-marker-radius"
+        }
+      },
+      "wifi_energy_saving": {
+        "default": "mdi:wifi-off",
+        "state": {
+          "on": "mdi:wifi"
+        }
+      }
+    },
+    "device_tracker": {
+      "tracker": {
+        "default": "mdi:paw"
+      }
+    },
+    "sensor": {
+      "last_update": {
+        "default": "mdi:clock-outline"
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "domain": "locogps",
+  "name": "LocoGPS",
+  "codeowners": ["@ChrissixP"],
+  "config_flow": true,
+  "documentation": "https://github.com/ChrissixP/locogps-homeassistant",
+  "integration_type": "hub",
+  "iot_class": "cloud_push",
+  "issue_tracker": "https://github.com/ChrissixP/locogps-homeassistant/issues",
+  "requirements": [],
+  "version": "0.1.0"
+}
