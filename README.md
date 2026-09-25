@@ -2,6 +2,10 @@
 
 Bringt deine LocoGPS-Tracker in Home Assistant. Positionen und Geozäune kommen live an, ohne Verzögerung durch Abfrageintervalle. Damit kannst du zum Beispiel über deine Echo-Lautsprecher ansagen lassen, wenn dein Hund das Zuhause verlässt oder zurückkommt, oder dich an das Aufladen erinnern lassen.
 
+Die ausführliche Anleitung mit Bildern und Beispielen findest du im [LocoGPS-Hilfecenter](https://locogps.de/helpcenter/erweiterte-funktionen/home-assistant-einbinden/).
+
+Die ausführliche Anleitung findest du im [LocoGPS-Hilfecenter](https://locogps.de/helpcenter/erweiterte-funktionen/home-assistant-einbinden/).
+
 *English below.*
 
 ## Was du bekommst
