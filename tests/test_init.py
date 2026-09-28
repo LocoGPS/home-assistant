@@ -195,6 +195,17 @@ async def test_socket_reconnects(
     await wait_for(hass, lambda: fake_server.socket_count == 1)
 
 
+async def test_reconnect_catches_up(
+    hass: HomeAssistant, fake_server: FakeLocoGPS, config_entry: MockConfigEntry
+) -> None:
+    """After a dropped connection devices are fetched again, not only positions."""
+    await setup_entry(hass, config_entry, fake_server)
+    assert hass.states.get(ONLINE).state == STATE_ON
+    fake_server.devices[0] = {**fake_server.devices[0], "status": "offline"}
+    await fake_server.close_sockets()
+    await wait_for(hass, lambda: hass.states.get(ONLINE).state == STATE_OFF)
+
+
 async def test_revoked_token_starts_reauth(
     hass: HomeAssistant, fake_server: FakeLocoGPS, config_entry: MockConfigEntry
 ) -> None:

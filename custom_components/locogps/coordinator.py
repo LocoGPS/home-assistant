@@ -85,6 +85,10 @@ class LocoGPSCoordinator(DataUpdateCoordinator[LocoGPSData]):
         )
         self.client = client
         self._reauth_started = False
+        # Set when the live socket dropped. The server only sends the latest
+        # positions on connect, so the first message after a reconnect also
+        # fetches devices and geofences again.
+        self._catch_up = False
 
     async def _async_update_data(self) -> LocoGPSData:
         try:
@@ -195,6 +199,7 @@ class LocoGPSCoordinator(DataUpdateCoordinator[LocoGPSData]):
                 _LOGGER.debug("LocoGPS live connection lost: %s", err)
             else:
                 _LOGGER.debug("LocoGPS live connection closed")
+            self._catch_up = True
             if time.monotonic() - started > 60:
                 delay = SOCKET_RECONNECT_MIN
             await asyncio.sleep(delay)
@@ -205,6 +210,9 @@ class LocoGPSCoordinator(DataUpdateCoordinator[LocoGPSData]):
         """Apply a live update without waiting for the next refresh."""
         if self.data is None:
             return
+        if self._catch_up:
+            self._catch_up = False
+            self.config_entry.async_create_task(self.hass, self.async_request_refresh())
         changed = False
         unknown_device = False
         for device in message.get("devices") or []:

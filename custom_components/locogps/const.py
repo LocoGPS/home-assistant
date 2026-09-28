@@ -22,8 +22,10 @@ TOKEN_REAUTH_BEFORE = timedelta(days=7)
 # only picks up new devices and geofences and anything the socket missed.
 UPDATE_INTERVAL = timedelta(minutes=5)
 
+# Retry delay of the live socket in seconds, doubled after every failed attempt.
+# A server restart takes well under a minute, so the socket is back soon after.
 SOCKET_RECONNECT_MIN = 5
-SOCKET_RECONNECT_MAX = 300
+SOCKET_RECONNECT_MAX = 30
 
 # homeStatus values an LV2 reports while it is connected to one of its saved
 # WLAN networks and saves power. Same mapping as the LocoGPS app.
