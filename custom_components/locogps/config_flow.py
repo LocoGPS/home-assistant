@@ -10,7 +10,10 @@ from typing import Any
 import voluptuous as vol
 from homeassistant.config_entries import SOURCE_REAUTH, ConfigFlow, ConfigFlowResult
 from homeassistant.const import CONF_EMAIL, CONF_HOST, CONF_PASSWORD, CONF_TOKEN
-from homeassistant.helpers.aiohttp_client import async_get_clientsession
+from homeassistant.helpers.aiohttp_client import (
+    async_create_clientsession,
+    async_get_clientsession,
+)
 from homeassistant.helpers.selector import (
     TextSelector,
     TextSelectorConfig,
@@ -57,8 +60,14 @@ class LocoGPSConfigFlow(ConfigFlow, domain=DOMAIN):
 
         Sets the unique id before the token is created, so an account that is
         already set up does not leave an unused token behind.
+
+        Login, token and logout run on a session of their own. aiohttp keeps the
+        login cookie in the cookie jar of the session that made the request, and
+        the shared session is used by every integration. Home Assistant turns
+        close() into a warning, so the session is detached once the login is done.
         """
-        client = LocoGPSClient(async_get_clientsession(self.hass), self.host, ssl=self.ssl)
+        session = async_create_clientsession(self.hass, auto_cleanup=False)
+        client = LocoGPSClient(session, self.host, ssl=self.ssl)
         try:
             user = await client.async_login(
                 user_input[CONF_EMAIL].strip(), user_input[CONF_PASSWORD]
@@ -85,6 +94,7 @@ class LocoGPSConfigFlow(ConfigFlow, domain=DOMAIN):
             return user, token
         finally:
             await client.async_logout()
+            session.detach()
         return None
 
     async def async_step_user(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:

@@ -9,6 +9,7 @@ from homeassistant.config_entries import SOURCE_USER
 from homeassistant.const import CONF_EMAIL, CONF_HOST, CONF_PASSWORD, CONF_TOKEN
 from homeassistant.core import HomeAssistant
 from homeassistant.data_entry_flow import FlowResultType
+from homeassistant.helpers import aiohttp_client
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.locogps.api import token_expiration
@@ -55,6 +56,41 @@ async def test_user_flow(hass: HomeAssistant, fake_server: FakeLocoGPS) -> None:
     assert expiration is not None
     assert expiration - datetime.now(UTC) > timedelta(days=364)
     # The password session is closed again.
+    assert fake_server.sessions == {}
+
+
+async def test_login_uses_own_session(
+    hass: HomeAssistant,
+    fake_server: FakeLocoGPS,
+    monkeypatch: pytest.MonkeyPatch,
+    caplog: pytest.LogCaptureFixture,
+) -> None:
+    """The login cookie never reaches the shared session, the own session is detached after."""
+    created = []
+
+    def _create(hass: HomeAssistant, *args, **kwargs):
+        session = aiohttp_client.async_create_clientsession(hass, *args, **kwargs)
+        created.append(session)
+        return session
+
+    def _shared(*args, **kwargs):
+        raise AssertionError("login must not use the shared session")
+
+    monkeypatch.setattr("custom_components.locogps.config_flow.async_create_clientsession", _create)
+    monkeypatch.setattr("custom_components.locogps.config_flow.async_get_clientsession", _shared)
+
+    result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": SOURCE_USER})
+    result = await hass.config_entries.flow.async_configure(
+        result["flow_id"], {CONF_EMAIL: EMAIL, CONF_PASSWORD: "falsch"}
+    )
+    assert result["errors"] == {"base": "invalid_auth"}
+    result = await hass.config_entries.flow.async_configure(
+        result["flow_id"], {CONF_EMAIL: EMAIL, CONF_PASSWORD: PASSWORD}
+    )
+    assert result["type"] is FlowResultType.CREATE_ENTRY
+    assert len(created) == 2
+    assert all(session.closed for session in created)
+    assert "closes the Home Assistant aiohttp session" not in caplog.text
     assert fake_server.sessions == {}
 
 
