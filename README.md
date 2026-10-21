@@ -28,11 +28,9 @@ Für Automationen rund um das Zuhause nimmst du am besten den Geozaun. Der wird 
 
 Du brauchst Home Assistant ab Version 2026.3 und [HACS](https://hacs.xyz).
 
-1. In HACS oben rechts das Menü öffnen und **Benutzerdefinierte Repositories** wählen.
-2. `https://github.com/LocoGPS/home-assistant` eintragen, als Typ **Integration** wählen und hinzufügen.
-3. **LocoGPS** in HACS suchen, herunterladen und Home Assistant neu starten.
-4. Unter **Einstellungen > Geräte & Dienste > Integration hinzufügen** nach **LocoGPS** suchen.
-5. Mit der E-Mail-Adresse und dem Passwort deines LocoGPS-Kontos anmelden.
+1. In HACS nach **LocoGPS** suchen, herunterladen und Home Assistant neu starten. Oder direkt [in HACS öffnen](https://my.home-assistant.io/redirect/hacs_repository/?owner=LocoGPS&repository=home-assistant&category=integration).
+2. Unter **Einstellungen > Geräte & Dienste > Integration hinzufügen** nach **LocoGPS** suchen.
+3. Mit der E-Mail-Adresse und dem Passwort deines LocoGPS-Kontos anmelden.
 
 Dein Passwort wird nicht gespeichert. Home Assistant bekommt einen eigenen Zugangsschlüssel, der ein Jahr gilt und sich von selbst verlängert. Entfernst du die Integration, wird der Schlüssel gelöscht.
 
@@ -85,7 +83,7 @@ Fragen und Fehlermeldungen gerne an [LocoGPS](https://locogps.de/kontakt) oder a
 
 ## English
 
-Brings your LocoGPS trackers into Home Assistant with live updates. Install it through HACS as a custom repository (`https://github.com/LocoGPS/home-assistant`, type Integration), restart Home Assistant, add the **LocoGPS** integration and log in with your LocoGPS account. Your password is not stored. Home Assistant receives its own access token that is valid for one year, renews itself and is revoked when you remove the integration.
+Brings your LocoGPS trackers into Home Assistant with live updates. Search for **LocoGPS** in HACS (or [open it in HACS directly](https://my.home-assistant.io/redirect/hacs_repository/?owner=LocoGPS&repository=home-assistant&category=integration)), download it, restart Home Assistant, add the **LocoGPS** integration and log in with your LocoGPS account. Your password is not stored. Home Assistant receives its own access token that is valid for one year, renews itself and is revoked when you remove the integration.
 
 Every tracker gets a device tracker, one binary sensor per geofence (Inside or Outside), battery level, charging, online status, last update and, for LV2 trackers, the WLAN power saving state. For automations around home, prefer the geofence sensor. It is computed by LocoGPS and switches exactly when the LocoGPS app notifies you.
 
